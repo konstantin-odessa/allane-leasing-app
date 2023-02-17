@@ -9,7 +9,6 @@ import {
 } from '../../models';
 import { ContractApiService, ModelAndBrandApiService } from '../../services';
 import {
-  delay,
   finalize,
   from,
   mergeAll,
@@ -30,11 +29,11 @@ import { DATE_FORMATS, SNACK_BAR_DURATION } from '../../constants';
 
 @Component({
   selector: 'app-contract-details',
-  templateUrl: './contract-details.component.html',
-  styleUrls: ['./contract-details.component.css'],
+  templateUrl: './edit-contract-details.component.html',
+  styleUrls: ['./edit-contract-details.component.css'],
   providers: [{ provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS }],
 })
-export class ContractDetailsComponent implements OnInit, OnDestroy {
+export class EditContractDetailsComponent implements OnInit, OnDestroy {
   isLoading = false;
   editMode = false;
   contract$!: Observable<Contract>;

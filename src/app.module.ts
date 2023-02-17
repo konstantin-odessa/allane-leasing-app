@@ -13,7 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { ContractDetailsComponent } from './components/contract-details/contract-details.component';
+import { EditContractDetailsComponent } from './components/edit-contract-details/edit-contract-details.component';
 import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -33,15 +33,17 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { DelayInterceptor } from './interceptors/delay.interceptor';
+import { CreateContractDetailsComponent } from './components/create-contract-details/create-contract-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContractsListComponent,
     NavigationMenuComponent,
-    ContractDetailsComponent,
+    EditContractDetailsComponent,
     CapEmptyDataPipe,
     DeleteContractModalComponent,
+    CreateContractDetailsComponent,
   ],
   imports: [
     BrowserModule,
