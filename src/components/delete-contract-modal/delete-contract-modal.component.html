@@ -1,0 +1,14 @@
+<div class="contract-modal-container">
+  <h2 mat-dialog-title>Confirmation</h2>
+  <mat-dialog-content>
+    Are you sure you want to delete contract with id {{ contractId }}?
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-button color="warn" (click)="delete()">Delete</button>
+  </mat-dialog-actions>
+
+  <div class="loading-cloak" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
