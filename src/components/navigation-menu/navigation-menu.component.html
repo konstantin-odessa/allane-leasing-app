@@ -1,11 +1,26 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="mat-elevation-z4 flex justify-between">
   <span>Allane Mobility Group</span>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/contracts">Contracts</button>
-    <button mat-menu-item routerLink="/vehicles">Vehicles</button>
-    <button mat-menu-item routerLink="/customers">Customers</button>
-  </mat-menu>
+  <div>
+    <a
+      mat-button
+      routerLink="/contracts"
+      class="mat-nav-link"
+      routerLinkActive="active-link"
+      >Contracts</a
+    >
+    <a
+      mat-button
+      routerLink="/customers"
+      class="mat-nav-link"
+      routerLinkActive="active-link"
+      >Customers</a
+    >
+    <a
+      mat-button
+      routerLink="/vehicles"
+      class="mat-nav-link"
+      routerLinkActive="active-link"
+      >Vehicles</a
+    >
+  </div>
 </mat-toolbar>

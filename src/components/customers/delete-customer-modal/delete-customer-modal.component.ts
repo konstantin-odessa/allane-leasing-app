@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Contract, Customer } from '../../../models';
+import { Customer } from '../../../models';
 import { CustomerApiService } from '../../../services';
 import { finalize } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';

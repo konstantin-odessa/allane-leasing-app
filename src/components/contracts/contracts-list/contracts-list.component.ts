@@ -1,10 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {
   merge,
   Observable,
-  of,
   shareReplay,
   startWith,
   switchMap,
@@ -13,7 +12,6 @@ import {
 import {
   ContractOverviewDTO,
   ContractOverviewPageResponseDTO,
-  Customer,
 } from '../../../models';
 import { ContractOverviewsApiService } from '../../../services';
 import { DataSortingEnum } from '../../../enums';

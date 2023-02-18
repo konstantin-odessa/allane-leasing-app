@@ -1,0 +1,15 @@
+a.mat-nav-link {
+  color: white;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin-right: 16px;
+}
+
+a.mat-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.active-link {
+  background-color: rgba(255, 255, 255, 0.1);
+  font-weight: bold;
+}

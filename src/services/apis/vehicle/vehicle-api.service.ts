@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   PageRequestDTO,
-  Vehicle,
   VehicleDTO,
   VehiclePageResponseDTO,
 } from '../../../models';

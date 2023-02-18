@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import {
   merge,
   Observable,
-  of,
   shareReplay,
   startWith,
   switchMap,
