@@ -1,0 +1,139 @@
+<div class="relative">
+  <ng-container *ngIf="customer$ | async as customer">
+    <mat-card [formGroup]="customerFormGroup">
+      <mat-card-header class="flex justify-between">
+        <mat-card-title>Customer Details:</mat-card-title>
+        <ng-container *ngIf="isStandalone">
+          <div *ngIf="!editMode">
+            <button
+              class="mr-5"
+              mat-raised-button
+              color="primary"
+              (click)="editCustomer(customer)">
+              Edit
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="deleteCustomer(customer)">
+              Delete
+            </button>
+          </div>
+
+          <div *ngIf="editMode">
+            <button
+              class="mr-5"
+              [disabled]="!customerFormGroup.valid"
+              mat-raised-button
+              color="primary"
+              (click)="saveCustomer()">
+              Save
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="cancelCustomerEdit()">
+              Cancel
+            </button>
+          </div>
+        </ng-container>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- Customer Details -->
+        <mat-card class="details-container">
+          <mat-card-content>
+            <mat-list *ngIf="!editMode; else editCustomerTmpl">
+              <mat-list-item>
+                <div class="list-item-content">
+                  <div><strong>First Name:</strong></div>
+                  <div>{{ customer.firstName | capEmptyData }}</div>
+                </div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+
+              <mat-list-item>
+                <div class="list-item-content">
+                  <div><strong>Last Name:</strong></div>
+                  <div>{{ customer.lastName | capEmptyData }}</div>
+                </div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+
+              <mat-list-item>
+                <div class="list-item-content">
+                  <div><strong>Birth Date:</strong></div>
+                  <div>{{ customer.birthDate | date | capEmptyData }}</div>
+                </div>
+              </mat-list-item>
+            </mat-list>
+
+            <ng-template #editCustomerTmpl>
+              <mat-list>
+                <mat-list-item>
+                  <div class="list-item-content">
+                    <div><strong>First Name:</strong></div>
+                    <mat-form-field class="form-container" appearance="fill">
+                      <input
+                        #firstNameMat="matInput"
+                        formControlName="firstName"
+                        matInput />
+                      <mat-error *ngIf="firstNameMat.errorState">{{
+                        requiredErrorMessage
+                      }}</mat-error>
+                    </mat-form-field>
+                  </div>
+                </mat-list-item>
+                <div class="mb-6">
+                  <mat-divider></mat-divider>
+                </div>
+
+                <mat-list-item>
+                  <div class="list-item-content">
+                    <div><strong>Last Name:</strong></div>
+                    <mat-form-field class="form-container" appearance="fill">
+                      <input
+                        #lastNameMat="matInput"
+                        formControlName="lastName"
+                        matInput />
+                      <mat-error *ngIf="lastNameMat.errorState">{{
+                        requiredErrorMessage
+                      }}</mat-error>
+                    </mat-form-field>
+                  </div>
+                </mat-list-item>
+                <div class="mb-6">
+                  <mat-divider></mat-divider>
+                </div>
+
+                <mat-list-item>
+                  <div class="list-item-content">
+                    <div><strong>Birth Date:</strong></div>
+                    <mat-form-field class="form-container" appearance="fill">
+                      <input
+                        #birthDateMat="matInput"
+                        matInput
+                        [matDatepicker]="picker"
+                        formControlName="birthDate" />
+                      <mat-error *ngIf="birthDateMat.errorState">{{
+                        requiredErrorMessage
+                      }}</mat-error>
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </ng-template>
+          </mat-card-content>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <div class="loading-cloak" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

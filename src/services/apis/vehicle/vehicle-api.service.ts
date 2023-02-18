@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   PageRequestDTO,
+  Vehicle,
   VehicleDTO,
   VehiclePageResponseDTO,
 } from '../../../models';
@@ -27,11 +28,14 @@ export class VehicleApiService {
     return this.http.post<VehicleDTO>(this.baseUrl, vehicle, httpOptions);
   }
 
-  updateVehicle(id: number, vehicle: VehicleDTO): Observable<VehicleDTO> {
+  updateVehicle(
+    id: VehicleDTO['id'],
+    vehicle: VehicleDTO
+  ): Observable<VehicleDTO> {
     return this.http.put<VehicleDTO>(`${this.baseUrl}/${id}`, vehicle);
   }
 
-  deleteVehicle(id: number): Observable<void> {
+  deleteVehicle(id: VehicleDTO['id']): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 

@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CapEmptyDataPipe implements PipeTransform {
   transform(value: string | number | null | unknown): unknown {
-    if (value === '' || Object.is(value, NaN) || value === null) {
+    if (value === '' || Object.is(value, NaN) || value == null) {
       return 'N/A';
     }
 

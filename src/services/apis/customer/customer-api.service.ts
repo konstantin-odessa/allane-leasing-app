@@ -5,6 +5,7 @@ import {
   CustomerDTO,
   PageRequestDTO,
   CustomerPageResponseDTO,
+  Customer,
 } from '../../../models';
 
 const httpOptions = {
@@ -22,7 +23,10 @@ export class CustomerApiService {
     return this.http.get<CustomerDTO>(`${this.API_URL}/${id}`);
   }
 
-  updateCustomer(id: number, contractDTO: CustomerDTO): Observable<void> {
+  updateCustomer(
+    id: CustomerDTO['id'],
+    contractDTO: CustomerDTO
+  ): Observable<void> {
     return this.http.put<void>(
       `${this.API_URL}/${id}`,
       contractDTO,
@@ -30,7 +34,7 @@ export class CustomerApiService {
     );
   }
 
-  deleteCustomer(id: number): Observable<void> {
+  deleteCustomer(id: Customer['id']): Observable<void> {
     return this.http.delete<void>(`${this.API_URL}/${id}`);
   }
 

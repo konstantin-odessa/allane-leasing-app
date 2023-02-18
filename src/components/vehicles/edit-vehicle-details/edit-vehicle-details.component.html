@@ -1,0 +1,248 @@
+<div class="relative">
+  <ng-container *ngIf="vehicle$ | async as vehicle">
+    <mat-card [formGroup]="vehicleFormGroup">
+      <mat-card-header class="flex justify-between">
+        <mat-card-title> Vehicle Details </mat-card-title>
+
+        <ng-container *ngIf="isStandalone">
+          <div *ngIf="!editMode">
+            <button
+              class="mr-5"
+              mat-raised-button
+              color="primary"
+              (click)="editVehicle(vehicle)">
+              Edit
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="deleteVehicle(vehicle)">
+              Delete
+            </button>
+          </div>
+
+          <div *ngIf="editMode">
+            <button
+              class="mr-10"
+              [disabled]="!vehicleFormGroup.valid"
+              mat-raised-button
+              color="primary"
+              (click)="saveVehicle()">
+              Save
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="cancelVehicleEdit()">
+              Cancel
+            </button>
+          </div>
+        </ng-container>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-card class="details-container">
+          <mat-card-content>
+            <!-- Vehicle Details -->
+            <mat-list *ngIf="!editMode; else editVehicleTmpl">
+              <!-- Brand -->
+              <mat-list-item>
+                <div class="list-item-content">
+                  <div><strong>Brand:</strong></div>
+                  <div>{{ vehicle.brand | capEmptyData }}</div>
+                </div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+
+              <!-- Model -->
+              <mat-list-item>
+                <div class="list-item-content">
+                  <div><strong>Model:</strong></div>
+                  <div>{{ vehicle.model | capEmptyData }}</div>
+                </div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+
+              <!-- Year -->
+              <mat-list-item>
+                <div class="list-item-content">
+                  <div><strong>Year:</strong></div>
+                  <div>{{ vehicle.modelYear | capEmptyData }}</div>
+                </div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+
+              <!-- VIN -->
+              <mat-list-item>
+                <div class="list-item-content">
+                  <div><strong>VIN:</strong></div>
+                  <div>{{ vehicle.vin | capEmptyData }}</div>
+                </div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+
+              <!-- Price -->
+              <mat-list-item>
+                <div class="list-item-content">
+                  <div><strong>Price:</strong></div>
+                  <div>
+                    {{ vehicle.price | currency : 'EUR' | capEmptyData }}
+                  </div>
+                </div>
+              </mat-list-item>
+            </mat-list>
+
+            <ng-template #editVehicleTmpl>
+              <mat-list>
+                <!-- Brand -->
+                <mat-list-item>
+                  <!-- Title -->
+                  <div class="list-item-content">
+                    <div>
+                      <strong>Brand:</strong>
+                    </div>
+
+                    <div>
+                      <mat-form-field class="form-container">
+                        <div class="relative">
+                          <mat-select
+                            #brandMat="matSelect"
+                            formControlName="brand">
+                            <mat-option
+                              *ngFor="let brand of brands$ | async"
+                              [value]="brand.name">
+                              {{ brand.name }}
+                            </mat-option>
+                          </mat-select>
+
+                          <div
+                            class="absolute top-0 bottom-0 left-0 right-0 flex align-middle justify-center"
+                            *ngIf="brandsLoading$ | async">
+                            <mat-spinner
+                              style="width: 20px; height: 20px"></mat-spinner>
+                          </div>
+                        </div>
+
+                        <mat-error *ngIf="brandMat.errorState">{{
+                          requiredErrorMessage
+                        }}</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-list-item>
+                <div class="mb-6">
+                  <mat-divider></mat-divider>
+                </div>
+
+                <!-- Model -->
+                <mat-list-item>
+                  <!-- Title -->
+                  <div class="list-item-content">
+                    <strong>Model:</strong>
+                    <div>
+                      <mat-form-field class="form-container">
+                        <div class="relative">
+                          <mat-select
+                            formControlName="model"
+                            #modelMat="matSelect">
+                            <mat-option
+                              *ngFor="let model of vehicleModels$ | async"
+                              [value]="model.name">
+                              {{ model.name }}
+                            </mat-option>
+                          </mat-select>
+
+                          <div
+                            class="absolute top-0 bottom-0 left-0 right-0 flex align-middle justify-center"
+                            *ngIf="modelsLoading$ | async">
+                            <mat-spinner
+                              style="width: 20px; height: 20px"></mat-spinner>
+                          </div>
+                        </div>
+                        <mat-error *ngIf="modelMat.errorState">{{
+                          requiredErrorMessage
+                        }}</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-list-item>
+                <div class="mb-6">
+                  <mat-divider></mat-divider>
+                </div>
+
+                <!-- Year -->
+                <mat-list-item>
+                  <!-- Title -->
+                  <div class="list-item-content">
+                    <strong>Year:</strong>
+                    <div>
+                      <mat-form-field class="form-container" appearance="fill">
+                        <input
+                          #yearMat="matInput"
+                          type="number"
+                          step="1"
+                          formControlName="modelYear"
+                          matInput />
+                        <mat-error *ngIf="yearMat.errorState">{{
+                          requiredErrorMessage
+                        }}</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-list-item>
+                <div class="mb-6">
+                  <mat-divider></mat-divider>
+                </div>
+
+                <!-- VIN -->
+                <mat-list-item>
+                  <!-- Title -->
+                  <div class="list-item-content">
+                    <strong>VIN:</strong>
+                    <div>
+                      <mat-form-field class="form-container" appearance="fill">
+                        <input
+                          #vinMat="matInput"
+                          formControlName="vin"
+                          matInput />
+                        <mat-error *ngIf="vinMat.errorState">{{
+                          requiredErrorMessage
+                        }}</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-list-item>
+                <div class="mb-6">
+                  <mat-divider></mat-divider>
+                </div>
+
+                <!-- Price -->
+                <mat-list-item>
+                  <!-- Title -->
+                  <div class="list-item-content">
+                    <strong>Price:</strong>
+                    <div>
+                      <mat-form-field class="form-container" appearance="fill">
+                        <input
+                          #priceMat="matInput"
+                          type="number"
+                          formControlName="price"
+                          matInput />
+                        <mat-error *ngIf="priceMat.errorState">{{
+                          requiredErrorMessage
+                        }}</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </ng-template>
+          </mat-card-content>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <div class="loading-cloak" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

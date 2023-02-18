@@ -1,0 +1,16 @@
+.list-item-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contract-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  min-width: 400px;
+  width: 100%;
+}
+
+mat-list mat-list-item {
+  height: 80px;
+}

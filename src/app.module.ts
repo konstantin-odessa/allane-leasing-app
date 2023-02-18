@@ -2,7 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './components/app/app.component';
-import { ContractsListComponent } from './components/contracts-list/contracts-list.component';
+import {
+  ContractsListComponent,
+  CreateContractDetailsComponent,
+  DeleteContractModalComponent,
+  EditContractDetailsComponent,
+} from './components/contracts';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -13,7 +18,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { EditContractDetailsComponent } from './components/edit-contract-details/edit-contract-details.component';
 import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -27,13 +31,20 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CapEmptyDataPipe } from './pipes/cap-empty-data/cap-empty-data.pipe';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { DeleteContractModalComponent } from './components/delete-contract-modal/delete-contract-modal.component';
 import {
-  MAT_DIALOG_DEFAULT_OPTIONS,
-  MatDialogModule,
-} from '@angular/material/dialog';
+  CreateCustomerDetailsComponent,
+  CustomersListComponent,
+  DeleteCustomerModalComponent,
+  EditCustomerDetailsComponent,
+} from './components/customers';
+import { MatDialogModule } from '@angular/material/dialog';
 import { DelayInterceptor } from './interceptors/delay.interceptor';
-import { CreateContractDetailsComponent } from './components/create-contract-details/create-contract-details.component';
+import {
+  CreateVehicleDetailsComponent,
+  DeleteVehicleModalComponent,
+  EditVehicleDetailsComponent,
+  VehiclesListComponent,
+} from './components/vehicles';
 
 @NgModule({
   declarations: [
@@ -44,6 +55,14 @@ import { CreateContractDetailsComponent } from './components/create-contract-det
     CapEmptyDataPipe,
     DeleteContractModalComponent,
     CreateContractDetailsComponent,
+    CustomersListComponent,
+    CreateCustomerDetailsComponent,
+    EditCustomerDetailsComponent,
+    DeleteCustomerModalComponent,
+    CreateVehicleDetailsComponent,
+    EditVehicleDetailsComponent,
+    VehiclesListComponent,
+    DeleteVehicleModalComponent,
   ],
   imports: [
     BrowserModule,
