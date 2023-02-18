@@ -41,3 +41,14 @@ table {
 .mat-column-created {
   max-width: 124px;
 }
+
+
+.empty-table-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  color: #999;
+
+  font-size: 20px;
+}
