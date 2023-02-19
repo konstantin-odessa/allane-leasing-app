@@ -82,7 +82,7 @@ export class EditVehicleDetailsComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   vehicleFormGroup: typeof VehicleFormService.prototype.form;
-  requiredErrorMessage = 'Field should not be empty';
+
   brands$!: Observable<Brand[]>;
   vehicleModels$!: Observable<VehicleModel[]>;
   vehicle$!: Observable<Vehicle>;

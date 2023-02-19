@@ -11,7 +11,7 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { ContractFormService } from '../../../services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DATE_FORMATS, SNACK_BAR_DURATION } from '../../../constants';
-import { DataSortingEnum } from '../../../enums';
+import { SortDirectionEnum } from '../../../enums';
 import { map } from 'rxjs/operators';
 import { MatSelectChange } from '@angular/material/select';
 
@@ -26,7 +26,6 @@ const MAX_PAGE_SIZE = 1000;
 export class CreateContractDetailsComponent implements OnDestroy {
   isLoading = false;
   contractFormGroup: typeof ContractFormService.prototype.form;
-  requiredErrorMessage = 'Field should not be empty';
 
   vehicles$!: Observable<Vehicle[]>;
   customers$!: Observable<Customer[]>;
@@ -47,7 +46,7 @@ export class CreateContractDetailsComponent implements OnDestroy {
       .getCustomers({
         page: 0,
         size: MAX_PAGE_SIZE,
-        sort: DataSortingEnum.UNSORTED,
+        sort: SortDirectionEnum.UNSORTED,
       })
       .pipe(map(({ overviewItems }) => overviewItems.map(Customer.mapFromDTO)));
 
@@ -55,7 +54,7 @@ export class CreateContractDetailsComponent implements OnDestroy {
       .getVehicles({
         page: 0,
         size: MAX_PAGE_SIZE,
-        sort: DataSortingEnum.UNSORTED,
+        sort: SortDirectionEnum.UNSORTED,
       })
       .pipe(map(({ overviewItems }) => overviewItems));
   }

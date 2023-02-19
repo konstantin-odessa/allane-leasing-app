@@ -15,7 +15,11 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteContractModalComponent } from '../delete-contract-modal/delete-contract-modal.component';
-import { DATE_FORMATS, SNACK_BAR_DURATION } from '../../../constants';
+import {
+  DATE_FORMATS,
+  REQUIRED_ERROR_MESSAGE,
+  SNACK_BAR_DURATION,
+} from '../../../constants';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -30,7 +34,7 @@ export class EditContractDetailsComponent implements OnInit, OnDestroy {
   contract$!: Observable<Contract>;
   contractId: Contract['id'];
   contractFormGroup: typeof ContractFormService.prototype.form;
-  requiredErrorMessage = 'Field should not be empty';
+  requiredErrorMessage = REQUIRED_ERROR_MESSAGE;
   customerId: Customer['id'];
   vehicleId: Vehicle['id'];
 

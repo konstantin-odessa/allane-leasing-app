@@ -1,1 +1,1 @@
-export * from './data-sorting.enum';
+export * from './sort-direction.enum';

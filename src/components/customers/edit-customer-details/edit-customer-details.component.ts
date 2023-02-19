@@ -21,7 +21,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CustomerApiService, ModelAndBrandApiService } from '../../../services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SNACK_BAR_DURATION } from '../../../constants';
-import { CustomerFormService } from '../../../services/forms/customer-form/customer-form.service';
+import { CustomerFormService } from '../../../services';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, map } from 'rxjs/operators';
 import { DeleteCustomerModalComponent } from '../delete-customer-modal/delete-customer-modal.component';
@@ -35,7 +35,6 @@ export class EditCustomerDetailsComponent implements OnInit, OnDestroy {
   editMode = false;
   isLoading = false;
   customerFormGroup: typeof CustomerFormService.prototype.form;
-  requiredErrorMessage = 'Field should not be empty';
 
   customer$!: Observable<Customer>;
 

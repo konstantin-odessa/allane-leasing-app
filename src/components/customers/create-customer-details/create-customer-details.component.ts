@@ -9,7 +9,7 @@ import {
   CustomerFormService,
 } from '../../../services';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SNACK_BAR_DURATION } from '../../../constants';
+import { REQUIRED_ERROR_MESSAGE, SNACK_BAR_DURATION } from '../../../constants';
 
 @Component({
   selector: 'app-create-customer-details',
@@ -20,7 +20,7 @@ export class CreateCustomerDetailsComponent implements OnDestroy {
   @Input() isStandalone = true;
   isLoading = false;
   customerFormGroup: typeof CustomerFormService.prototype.form;
-  requiredErrorMessage = 'Field should not be empty';
+  requiredErrorMessage = REQUIRED_ERROR_MESSAGE;
 
   constructor(
     private router: Router,

@@ -14,8 +14,9 @@ import {
   ContractOverviewPageResponseDTO,
 } from '../../../models';
 import { ContractOverviewsApiService } from '../../../services';
-import { DataSortingEnum } from '../../../enums';
+import { SortDirectionEnum } from '../../../enums';
 import { map } from 'rxjs/operators';
+import { assertNever, getSortDirection } from '../../../helpers';
 
 @Component({
   selector: 'app-contracts-list',
@@ -59,7 +60,7 @@ export class ContractsListComponent implements AfterViewInit {
           .getContractOverviews({
             page: this.paginator.pageIndex,
             size: this.paginator.pageSize,
-            sort: this._getSortDirection(),
+            sort: getSortDirection(this.sort.direction),
           })
           .pipe(
             tap(() => {
@@ -76,26 +77,5 @@ export class ContractsListComponent implements AfterViewInit {
     this.contracts$ = this.dataSource$.pipe(
       map(({ overviewItems }) => overviewItems)
     );
-  }
-
-  private _getSortDirection() {
-    let sortDirection: DataSortingEnum;
-
-    switch (this.sort.direction) {
-      case '':
-        sortDirection = DataSortingEnum.UNSORTED;
-        break;
-      case 'asc':
-        sortDirection = DataSortingEnum.ASC;
-        break;
-
-      case 'desc':
-        sortDirection = DataSortingEnum.DESC;
-        break;
-      default:
-        throw new Error('should not happen');
-    }
-
-    return sortDirection;
   }
 }

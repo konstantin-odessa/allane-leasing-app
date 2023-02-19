@@ -1,9 +1,9 @@
-import { DataSortingEnum } from '../enums';
+import { SortDirectionEnum } from '../enums';
 
 export type PageRequestDTO = {
   page: number;
   size: number;
-  sort: DataSortingEnum;
+  sort: SortDirectionEnum;
 };
 
 export type BasePageResponseDTO<T extends object> = {
@@ -11,7 +11,7 @@ export type BasePageResponseDTO<T extends object> = {
   numberOfPages: number;
   page: number;
   size: number;
-  sort: DataSortingEnum;
+  sort: SortDirectionEnum;
   overviewItems: T[];
 };
 

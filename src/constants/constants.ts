@@ -16,3 +16,5 @@ export const DATE_FORMATS: MatDateFormats = {
 };
 
 export const SNACK_BAR_DURATION = 5000;
+
+export const REQUIRED_ERROR_MESSAGE = 'Field should not be empty';

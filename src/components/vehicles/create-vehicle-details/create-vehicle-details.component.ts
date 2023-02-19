@@ -8,9 +8,9 @@ import {
   VehicleHelperService,
 } from '../../../services';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SNACK_BAR_DURATION } from '../../../constants';
+import { REQUIRED_ERROR_MESSAGE, SNACK_BAR_DURATION } from '../../../constants';
 import { Brand, Vehicle, VehicleModel } from '../../../models';
-import { VehicleFormService } from '../../../services/forms/vehicle-form/vehicle-form.service';
+import { VehicleFormService } from '../../../services';
 
 @Component({
   selector: 'app-create-vehicle-details',
@@ -24,7 +24,7 @@ export class CreateVehicleDetailsComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   vehicleFormGroup: typeof VehicleFormService.prototype.form;
-  requiredErrorMessage = 'Field should not be empty';
+  requiredErrorMessage = REQUIRED_ERROR_MESSAGE;
   brandsLoading$!: Observable<boolean>;
 
   modelsLoading$!: Observable<boolean>;

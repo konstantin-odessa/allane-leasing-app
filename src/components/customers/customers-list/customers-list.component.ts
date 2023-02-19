@@ -10,9 +10,10 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { CustomerApiService } from '../../../services';
-import { DataSortingEnum } from '../../../enums';
+import { SortDirectionEnum } from '../../../enums';
 import { map } from 'rxjs/operators';
 import { Customer, CustomerPageResponseDTO } from '../../../models';
+import { assertNever, getSortDirection } from '../../../helpers';
 
 @Component({
   selector: 'app-customers-list',
@@ -45,7 +46,7 @@ export class CustomersListComponent implements AfterViewInit {
           .getCustomers({
             page: this.paginator.pageIndex,
             size: this.paginator.pageSize,
-            sort: this._getSortDirection(),
+            sort: getSortDirection(this.sort.direction),
           })
           .pipe(
             tap(() => {
@@ -62,26 +63,5 @@ export class CustomersListComponent implements AfterViewInit {
     this.customers$ = this.dataSource$.pipe(
       map(({ overviewItems }) => overviewItems.map(Customer.mapFromDTO))
     );
-  }
-
-  private _getSortDirection() {
-    let sortDirection: DataSortingEnum;
-
-    switch (this.sort.direction) {
-      case '':
-        sortDirection = DataSortingEnum.UNSORTED;
-        break;
-      case 'asc':
-        sortDirection = DataSortingEnum.ASC;
-        break;
-
-      case 'desc':
-        sortDirection = DataSortingEnum.DESC;
-        break;
-      default:
-        throw new Error('should not happen');
-    }
-
-    return sortDirection;
   }
 }
