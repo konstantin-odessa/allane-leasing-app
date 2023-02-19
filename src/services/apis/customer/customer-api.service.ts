@@ -15,12 +15,12 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class CustomerApiService {
-  private readonly API_URL = 'http://localhost:8080/customer';
+  private readonly baseUrl = 'http://localhost:8080/customer';
 
   constructor(private http: HttpClient) {}
 
   getCustomer(id: number): Observable<CustomerDTO> {
-    return this.http.get<CustomerDTO>(`${this.API_URL}/${id}`);
+    return this.http.get<CustomerDTO>(`${this.baseUrl}/${id}`);
   }
 
   updateCustomer(
@@ -28,24 +28,24 @@ export class CustomerApiService {
     contractDTO: CustomerDTO
   ): Observable<void> {
     return this.http.put<void>(
-      `${this.API_URL}/${id}`,
+      `${this.baseUrl}/${id}`,
       contractDTO,
       httpOptions
     );
   }
 
   deleteCustomer(id: Customer['id']): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
   createCustomer(contractDTO: CustomerDTO): Observable<CustomerDTO> {
-    return this.http.post<CustomerDTO>(this.API_URL, contractDTO, httpOptions);
+    return this.http.post<CustomerDTO>(this.baseUrl, contractDTO, httpOptions);
   }
 
   getCustomers(
     pageRequest: PageRequestDTO
   ): Observable<CustomerPageResponseDTO> {
-    return this.http.get<CustomerPageResponseDTO>(`${this.API_URL}s`, {
+    return this.http.get<CustomerPageResponseDTO>(`${this.baseUrl}s`, {
       params: pageRequest,
     });
   }

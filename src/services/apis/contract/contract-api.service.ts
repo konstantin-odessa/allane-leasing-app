@@ -12,12 +12,12 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class ContractApiService {
-  private readonly API_URL = 'http://localhost:8080/contract';
+  private readonly baseUrl = 'http://localhost:8080/contract';
 
   constructor(private http: HttpClient) {}
 
   getContract(id: number): Observable<Contract> {
-    return this.http.get<ContractDTO>(`${this.API_URL}/${id}`).pipe(
+    return this.http.get<ContractDTO>(`${this.baseUrl}/${id}`).pipe(
       map(data => {
         return { ...data, customer: Customer.mapFromDTO(data.customer) };
       })
@@ -29,17 +29,17 @@ export class ContractApiService {
     contractDTO: ContractDTO
   ): Observable<void> {
     return this.http.put<void>(
-      `${this.API_URL}/${id}`,
+      `${this.baseUrl}/${id}`,
       contractDTO,
       httpOptions
     );
   }
 
   deleteContract(id: Contract['id']): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
   createContract(contractDTO: ContractDTO): Observable<ContractDTO> {
-    return this.http.post<ContractDTO>(this.API_URL, contractDTO, httpOptions);
+    return this.http.post<ContractDTO>(this.baseUrl, contractDTO, httpOptions);
   }
 }
