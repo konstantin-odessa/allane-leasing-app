@@ -8,7 +8,7 @@ import {
 } from '../../../services';
 import { finalize, Observable } from 'rxjs';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { ContractFormService } from '../../../services/forms/contract-form/contract-form.service';
+import { ContractFormService } from '../../../services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DATE_FORMATS, SNACK_BAR_DURATION } from '../../../constants';
 import { DataSortingEnum } from '../../../enums';

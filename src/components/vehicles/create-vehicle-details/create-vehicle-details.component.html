@@ -7,7 +7,7 @@
         <button
           [disabled]="!vehicleFormGroup.valid"
           mat-raised-button
-          color="primary"
+          color="accent"
           (click)="createVehicle()">
           Create vehicle
         </button>
@@ -28,6 +28,7 @@
 
                 <div>
                   <mat-form-field>
+                    <mat-label>Select brand:</mat-label>
                     <div class="relative">
                       <mat-select #brandMat="matSelect" formControlName="brand">
                         <mat-option
@@ -63,6 +64,7 @@
                 <strong>Model:</strong>
                 <div>
                   <mat-form-field>
+                    <mat-label>Select vehicle model:</mat-label>
                     <div class="relative">
                       <mat-select formControlName="model" #modelMat="matSelect">
                         <mat-option
@@ -97,6 +99,7 @@
                 <strong>Year:</strong>
                 <div>
                   <mat-form-field appearance="fill">
+                    <mat-label>Enter year:</mat-label>
                     <input
                       #yearMat="matInput"
                       type="number"
@@ -121,6 +124,7 @@
                 <strong>VIN:</strong>
                 <div>
                   <mat-form-field appearance="fill">
+                    <mat-label>Enter VIN:</mat-label>
                     <input #vinMat="matInput" formControlName="vin" matInput />
                     <mat-error *ngIf="vinMat.errorState">{{
                       requiredErrorMessage
@@ -140,6 +144,7 @@
                 <strong>Price:</strong>
                 <div>
                   <mat-form-field appearance="fill">
+                    <mat-label>Enter price:</mat-label>
                     <input
                       #priceMat="matInput"
                       type="number"

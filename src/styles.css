@@ -29,3 +29,21 @@ a {
   color: revert;
   text-decoration: revert;
 }
+
+
+.table-container {
+  position: relative;
+  max-height: calc(100vh - 190px);
+  overflow: auto;
+  min-height: 200px;
+}
+
+.empty-table-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  color: #999;
+
+  font-size: 20px;
+}

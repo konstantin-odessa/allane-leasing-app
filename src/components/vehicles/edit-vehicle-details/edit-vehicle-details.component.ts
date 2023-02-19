@@ -26,7 +26,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SNACK_BAR_DURATION } from '../../../constants';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteVehicleModalComponent } from '../delete-vehicle-modal/delete-vehicle-modal.component';
-import { VehicleFormService } from '../../../services/forms/vehicle-form/vehicle-form.service';
+import { VehicleFormService } from '../../../services';
 import { Brand, Vehicle, VehicleDTO, VehicleModel } from '../../../models';
 import { filter } from 'rxjs/operators';
 
@@ -48,10 +48,13 @@ export class EditVehicleDetailsComponent implements OnInit, OnDestroy {
   @Input()
   isStandalone = true;
   editMode = false;
+  private _vehicleId: Vehicle['id'];
   @Input() set vehicleId(value: Vehicle['id']) {
     if (!value) {
       return;
     }
+
+    this._vehicleId = value;
 
     this.isLoading = true;
 
@@ -130,7 +133,7 @@ export class EditVehicleDetailsComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     this.vehicleApiService
-      .updateVehicle(this.vehicleId, updatedVehicle)
+      .updateVehicle(this._vehicleId, updatedVehicle)
       .pipe(
         finalize(() => {
           this.isLoading = false;

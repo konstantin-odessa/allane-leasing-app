@@ -4,12 +4,12 @@
   </button>
 </div>
 
-<div class="example-container mat-elevation-z8">
-  <div class="example-loading-shade" *ngIf="isLoading">
+<div class="relative mat-elevation-z8">
+  <div class="loading-cloak" *ngIf="isLoading">
     <mat-spinner *ngIf="isLoading"></mat-spinner>
   </div>
 
-  <div class="example-table-container">
+  <div class="table-container">
     <table
       mat-table
       [dataSource]="vehicles$ | async"
@@ -56,7 +56,7 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
       <tr class="mat-row" *matNoDataRow>

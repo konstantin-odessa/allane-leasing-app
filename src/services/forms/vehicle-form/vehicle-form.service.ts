@@ -24,7 +24,7 @@ export class VehicleFormService {
       validators: [Validators.required],
       nonNullable: true,
     }),
-    vin: new FormControl<Vehicle['vin']>(''),
+    vin: new FormControl<Vehicle['vin'] | null>(null),
   });
 
   get form() {

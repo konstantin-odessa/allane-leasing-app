@@ -50,10 +50,13 @@ export class EditCustomerDetailsComponent implements OnInit, OnDestroy {
   }
   @Input()
   isStandalone = true;
+  _customerId: Customer['id'];
   @Input() set customerId(value: Customer['id']) {
     if (!value) {
       return;
     }
+
+    this._customerId = value;
 
     this.isLoading = true;
 
@@ -116,7 +119,7 @@ export class EditCustomerDetailsComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     this.customerApiService
-      .updateCustomer(this.customerId, updatedCustomer)
+      .updateCustomer(this._customerId, updatedCustomer)
       .pipe(
         finalize(() => {
           this.isLoading = false;

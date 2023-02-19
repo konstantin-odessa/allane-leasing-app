@@ -24,28 +24,4 @@ export class CustomerFormService {
   get form() {
     return this._customerFormGroup;
   }
-
-  // patchValue(contract: Customer) {
-  //   const { vehicle, customer, monthlyRate } = contract;
-  //
-  //   this._customerFormGroup.patchValue({ monthlyRate });
-  //
-  //   this._customerFormGroup.patchValue({
-  //     vehicle: {
-  //       brand: vehicle.brand,
-  //       modelYear: vehicle.modelYear,
-  //       model: vehicle.model,
-  //       price: vehicle.price,
-  //       vin: vehicle.vin,
-  //     },
-  //   });
-  //
-  //   this._customerFormGroup.patchValue({
-  //     customer: {
-  //       firstName: customer.firstName,
-  //       lastName: customer.lastName,
-  //       birthDate: new Date(customer.birthDate),
-  //     },
-  //   });
-  // }
 }

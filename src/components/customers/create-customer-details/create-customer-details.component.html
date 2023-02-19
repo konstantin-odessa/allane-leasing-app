@@ -7,9 +7,9 @@
         *ngIf="isStandalone"
         [disabled]="!customerFormGroup.valid"
         mat-raised-button
-        color="primary"
+        color="accent"
         (click)="createCustomer()">
-        Create contact
+        Create customer
       </button>
     </mat-card-header>
     <mat-card-content>
@@ -21,6 +21,7 @@
               <div class="list-item-content">
                 <div><strong>First Name:</strong></div>
                 <mat-form-field class="form-container" appearance="fill">
+                  <mat-label>Enter first name:</mat-label>
                   <input
                     #firstNameMat="matInput"
                     formControlName="firstName"
@@ -39,6 +40,7 @@
               <div class="list-item-content">
                 <div><strong>Last Name:</strong></div>
                 <mat-form-field class="form-container" appearance="fill">
+                  <mat-label>Enter last name:</mat-label>
                   <input
                     #lastNameMat="matInput"
                     formControlName="lastName"
@@ -57,6 +59,7 @@
               <div class="list-item-content">
                 <div><strong>Birth Date:</strong></div>
                 <mat-form-field class="form-container" appearance="fill">
+                  <mat-label>Enter birth date:</mat-label>
                   <input
                     #birthDateMat="matInput"
                     matInput
