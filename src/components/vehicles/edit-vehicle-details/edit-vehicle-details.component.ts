@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   finalize,
   from,
@@ -21,6 +28,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteVehicleModalComponent } from '../delete-vehicle-modal/delete-vehicle-modal.component';
 import { VehicleFormService } from '../../../services/forms/vehicle-form/vehicle-form.service';
 import { Brand, Vehicle, VehicleDTO, VehicleModel } from '../../../models';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-vehicle-details',
@@ -40,7 +48,33 @@ export class EditVehicleDetailsComponent implements OnInit, OnDestroy {
   @Input()
   isStandalone = true;
   editMode = false;
-  @Input() vehicleId: Vehicle['id'];
+  @Input() set vehicleId(value: Vehicle['id']) {
+    if (!value) {
+      return;
+    }
+
+    this.isLoading = true;
+
+    this.vehicle$ = from([
+      of(this.vehicleFormGroup.value as Vehicle),
+      this.vehicleApiService.getVehicle(value),
+    ]).pipe(
+      mergeAll(),
+      finalize(() => (this.isLoading = false)),
+      shareReplay(1)
+    );
+
+    this.vehicle$
+      .pipe(
+        filter(vehicle => {
+          return !!vehicle.brand;
+        }),
+        take(1)
+      )
+      .subscribe(vehicle => this.vehicleLoaded.emit(vehicle));
+  }
+  @Output() vehicleLoaded = new EventEmitter<Vehicle>();
+
   isLoading = false;
   vehicleFormGroup: typeof VehicleFormService.prototype.form;
   requiredErrorMessage = 'Field should not be empty';
@@ -65,17 +99,8 @@ export class EditVehicleDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.vehicleId ??= Number(this.activatedRoute.snapshot.paramMap.get('id'));
-
-    this.isLoading = true;
-
-    this.vehicle$ = from([
-      of(this.vehicleFormGroup.value as Vehicle),
-      this.vehicleApiService.getVehicle(this.vehicleId),
-    ]).pipe(
-      mergeAll(),
-      finalize(() => (this.isLoading = false)),
-      shareReplay(1)
+    this.vehicleId ??= Number(
+      this.activatedRoute.snapshot.paramMap.get('vehicleId')
     );
 
     this.vehicleHelperService.initDataFetching();

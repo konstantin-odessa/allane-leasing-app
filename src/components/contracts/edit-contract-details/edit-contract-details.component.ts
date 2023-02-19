@@ -34,7 +34,9 @@ export class EditContractDetailsComponent implements OnInit, OnDestroy {
     this.contractFormGroup = this.contractFormService.form;
   }
   ngOnInit() {
-    this.contractId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.contractId = Number(
+      this.activatedRoute.snapshot.paramMap.get('contractId')
+    );
 
     this.isLoading = true;
 

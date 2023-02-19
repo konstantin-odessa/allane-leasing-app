@@ -1,60 +1,92 @@
-<div class="relative">
-  <mat-card [formGroup]="contractFormGroup">
-    <mat-card-header class="flex justify-between">
-      <mat-card-title>Contract Details:</mat-card-title>
+<mat-card class="relative">
+  <mat-card-content>
+    <mat-stepper
+      [formGroup]="contractFormGroup"
+      orientation="vertical"
+      #stepper>
+      <mat-step [stepControl]="contractFormGroup.controls.monthlyRate">
+        <form>
+          <ng-template matStepLabel>Set monthly rate</ng-template>
+          <mat-form-field appearance="fill">
+            <mat-label>Monthly rate:</mat-label>
+            <input
+              type="number"
+              matInput
+              formControlName="monthlyRate"
+              required />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="contractFormGroup.controls.vehicle">
+        <form>
+          <ng-template matStepLabel>Select vehicle</ng-template>
+          <mat-form-field>
+            <mat-label>Select vehicle</mat-label>
+            <mat-select (selectionChange)="changeVehicle($event)">
+              <mat-option
+                *ngFor="let vehicle of vehicles$ | async"
+                [value]="vehicle.id">
+                {{ vehicle | vehicleOutput }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-      <button
-        [disabled]="!contractFormGroup.valid"
-        mat-raised-button
-        color="primary"
-        (click)="createContract()">
-        Create contact
-      </button>
-    </mat-card-header>
-    <mat-card-content class="mt-5">
-      <!-- Common Details -->
-      <mat-card class="relative">
-        <mat-card-header>Common Details</mat-card-header>
-        <mat-card-content class="contract-details-container">
-          <mat-list>
-            <mat-list-item>
-              <div class="list-item-content">
-                <div><strong>Monthly rate:</strong></div>
-                <mat-form-field class="form-container" appearance="fill">
-                  <input
-                    type="number"
-                    #monthlyRateMat="matInput"
-                    formControlName="monthlyRate"
-                    matInput />
-                  <mat-error *ngIf="monthlyRateMat.errorState">{{
-                    requiredErrorMessage
-                  }}</mat-error>
-                </mat-form-field>
-              </div>
-            </mat-list-item>
-          </mat-list>
-        </mat-card-content>
+          <mat-expansion-panel [expanded]="!!selectedVehicleId">
+            <app-edit-vehicle-details
+              (vehicleLoaded)="onVehicleLoaded($event)"
+              [vehicleId]="selectedVehicleId"
+              [isStandalone]="false"></app-edit-vehicle-details>
+          </mat-expansion-panel>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="contractFormGroup.controls.customer">
+        <form>
+          <ng-template matStepLabel>Select customer</ng-template>
+          <mat-form-field>
+            <mat-label>Select customer</mat-label>
+            <mat-select (selectionChange)="changeCustomer($event)">
+              <mat-option
+                *ngFor="let customer of customers$ | async"
+                [value]="customer.id">
+                {{ customer.firstName + ' ' + customer.lastName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <div class="loading-cloak" *ngIf="isLoading">
-          <mat-spinner></mat-spinner>
-        </div>
-      </mat-card>
+          <mat-expansion-panel [expanded]="!!selectedCustomerId">
+            <app-edit-customer-details
+              (customerLoaded)="onCustomerLoaded($event)"
+              [customerId]="selectedCustomerId"
+              [isStandalone]="false"></app-edit-customer-details>
+          </mat-expansion-panel>
 
-      <div class="mt-5"></div>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-stepper>
+  </mat-card-content>
 
-      <!-- Vehicle Details -->
-      <app-create-vehicle-details
-        [isStandalone]="false"></app-create-vehicle-details>
+  <mat-card-actions>
+    <button
+      (click)="createContract()"
+      [disabled]="!contractFormGroup.valid"
+      mat-raised-button
+      color="accent">
+      Create contract
+    </button>
+  </mat-card-actions>
 
-      <div class="mt-5"></div>
-
-      <!-- Customer Details -->
-      <app-create-customer-details
-        [isStandalone]="false"></app-create-customer-details>
-    </mat-card-content>
-  </mat-card>
-
-  <div class="loading-cloak" *ngIf="isLoading">
+  <div *ngIf="isLoading" class="loading-cloak">
     <mat-spinner></mat-spinner>
   </div>
-</div>
+</mat-card>

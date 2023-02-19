@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   PageRequestDTO,
+  Vehicle,
   VehicleDTO,
   VehiclePageResponseDTO,
 } from '../../../models';
@@ -19,7 +20,7 @@ export class VehicleApiService {
 
   constructor(private http: HttpClient) {}
 
-  getVehicle(id: number): Observable<VehicleDTO> {
+  getVehicle(id: Vehicle['id']): Observable<VehicleDTO> {
     return this.http.get<VehicleDTO>(`${this.baseUrl}/${id}`);
   }
 

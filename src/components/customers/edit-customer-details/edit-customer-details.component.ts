@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   finalize,
   from,
@@ -16,7 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SNACK_BAR_DURATION } from '../../../constants';
 import { CustomerFormService } from '../../../services/forms/customer-form/customer-form.service';
 import { MatDialog } from '@angular/material/dialog';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { DeleteCustomerModalComponent } from '../delete-customer-modal/delete-customer-modal.component';
 
 @Component({
@@ -43,7 +50,33 @@ export class EditCustomerDetailsComponent implements OnInit, OnDestroy {
   }
   @Input()
   isStandalone = true;
-  @Input() customerId: Customer['id'];
+  @Input() set customerId(value: Customer['id']) {
+    if (!value) {
+      return;
+    }
+
+    this.isLoading = true;
+
+    this.customer$ = from([
+      of(this.customerFormGroup.value as Customer),
+      this.customerApiService.getCustomer(value).pipe(map(Customer.mapFromDTO)),
+    ]).pipe(
+      mergeAll(),
+      finalize(() => (this.isLoading = false)),
+      shareReplay(1)
+    );
+
+    this.customer$
+      .pipe(
+        filter(customer => {
+          return !!customer.birthDate;
+        }),
+        take(1)
+      )
+      .subscribe(customer => this.customerLoaded.emit(customer));
+  }
+
+  @Output() customerLoaded = new EventEmitter<Customer>();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -57,19 +90,8 @@ export class EditCustomerDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.customerId ??= Number(this.activatedRoute.snapshot.paramMap.get('id'));
-
-    this.isLoading = true;
-
-    this.customer$ = from([
-      of(this.customerFormGroup.value as Customer),
-      this.customerApiService
-        .getCustomer(this.customerId)
-        .pipe(map(Customer.mapFromDTO)),
-    ]).pipe(
-      mergeAll(),
-      finalize(() => (this.isLoading = false)),
-      shareReplay(1)
+    this.customerId ??= Number(
+      this.activatedRoute.snapshot.paramMap.get('customerId')
     );
   }
 

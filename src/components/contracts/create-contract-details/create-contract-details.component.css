@@ -14,3 +14,26 @@
 mat-list mat-list-item {
   height: 80px;
 }
+
+
+.vehicle-select-container {
+  padding: 0 15px;
+  background-color: rgb(219 219 219 / 30%);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  max-width: 606px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+
+.vehicle-select-title {
+  font-size: 22px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+::ng-deep .mat-expansion-panel-body{
+  padding: 0 !important;
+}

@@ -1,12 +1,21 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ContractDTO, Customer } from '../../../models';
-import { ContractApiService } from '../../../services';
-import { finalize } from 'rxjs';
+import { ContractDTO, Customer, Vehicle } from '../../../models';
+import {
+  ContractApiService,
+  CustomerApiService,
+  VehicleApiService,
+} from '../../../services';
+import { finalize, Observable } from 'rxjs';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { ContractFormService } from '../../../services/forms/contract-form/contract-form.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DATE_FORMATS, SNACK_BAR_DURATION } from '../../../constants';
+import { DataSortingEnum } from '../../../enums';
+import { map } from 'rxjs/operators';
+import { MatSelectChange } from '@angular/material/select';
+
+const MAX_PAGE_SIZE = 1000;
 
 @Component({
   selector: 'app-contract-details',
@@ -19,13 +28,36 @@ export class CreateContractDetailsComponent implements OnDestroy {
   contractFormGroup: typeof ContractFormService.prototype.form;
   requiredErrorMessage = 'Field should not be empty';
 
+  vehicles$!: Observable<Vehicle[]>;
+  customers$!: Observable<Customer[]>;
+
+  selectedVehicleId: Vehicle['id'];
+  selectedCustomerId: Customer['id'];
+
   constructor(
     private router: Router,
     private contractsApiService: ContractApiService,
+    private customersApiService: CustomerApiService,
+    private vehicleApiService: VehicleApiService,
     private contractFormService: ContractFormService,
     private snackBarService: MatSnackBar
   ) {
     this.contractFormGroup = this.contractFormService.form;
+    this.customers$ = customersApiService
+      .getCustomers({
+        page: 0,
+        size: MAX_PAGE_SIZE,
+        sort: DataSortingEnum.UNSORTED,
+      })
+      .pipe(map(({ overviewItems }) => overviewItems.map(Customer.mapFromDTO)));
+
+    this.vehicles$ = vehicleApiService
+      .getVehicles({
+        page: 0,
+        size: MAX_PAGE_SIZE,
+        sort: DataSortingEnum.UNSORTED,
+      })
+      .pipe(map(({ overviewItems }) => overviewItems));
   }
 
   ngOnDestroy() {
@@ -35,9 +67,14 @@ export class CreateContractDetailsComponent implements OnDestroy {
   createContract() {
     const newContract: ContractDTO = {
       ...this.contractFormGroup.value,
-      customer: Customer.mapToDTO(
-        this.contractFormGroup.value.customer as Customer
-      ),
+      vehicle: {
+        id: this.selectedVehicleId,
+        ...this.contractFormGroup.value.vehicle,
+      },
+      customer: Customer.mapToDTO({
+        id: this.selectedCustomerId,
+        ...this.contractFormGroup.value.customer,
+      } as Customer),
     } as ContractDTO;
 
     this.isLoading = true;
@@ -69,5 +106,25 @@ export class CreateContractDetailsComponent implements OnDestroy {
           });
         },
       });
+  }
+
+  changeVehicle({ value }: MatSelectChange) {
+    this.selectedVehicleId = value;
+  }
+
+  changeCustomer({ value }: MatSelectChange) {
+    this.selectedCustomerId = value;
+  }
+
+  onCustomerLoaded(customer: Customer) {
+    this.contractFormGroup.patchValue({
+      customer,
+    });
+  }
+
+  onVehicleLoaded(vehicle: Vehicle) {
+    this.contractFormGroup.patchValue({
+      vehicle,
+    });
   }
 }

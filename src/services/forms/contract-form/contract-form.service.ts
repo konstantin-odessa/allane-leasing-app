@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Contract } from '../../../models';
 import { CustomerFormService } from '../customer-form/customer-form.service';
 import { VehicleFormService } from '../vehicle-form/vehicle-form.service';
+import { nanValidator } from '../../../validators';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { VehicleFormService } from '../vehicle-form/vehicle-form.service';
 export class ContractFormService {
   private _contractFormGroup = new FormGroup({
     monthlyRate: new FormControl(NaN, {
-      validators: [Validators.required],
+      validators: [Validators.required, nanValidator],
       nonNullable: true,
     }),
 

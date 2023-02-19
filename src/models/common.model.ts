@@ -1,4 +1,4 @@
-import { DataSortingEnum } from '../../enums';
+import { DataSortingEnum } from '../enums';
 
 export type PageRequestDTO = {
   page: number;
