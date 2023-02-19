@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Contract, ContractDTO, Customer, Vehicle } from '../../../models';
-import { ContractApiService } from '../../../services';
+import { ContractApiService, ContractFormService } from '../../../services';
 import {
   finalize,
   from,
@@ -12,7 +12,6 @@ import {
   take,
 } from 'rxjs';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { ContractFormService } from '../../../services/forms/contract-form/contract-form.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteContractModalComponent } from '../delete-contract-modal/delete-contract-modal.component';

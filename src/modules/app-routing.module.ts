@@ -10,7 +10,7 @@ import {
   CreateCustomerDetailsComponent,
   CustomersListComponent,
   EditCustomerDetailsComponent,
-} from './components';
+} from '../components';
 
 const routes: Routes = [
   {
