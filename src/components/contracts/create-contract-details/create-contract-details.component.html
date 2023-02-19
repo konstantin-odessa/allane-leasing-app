@@ -31,16 +31,27 @@
         [completed]="contractFormGroup.controls.vehicle.valid">
         <form>
           <ng-template matStepLabel>Select vehicle</ng-template>
-          <mat-form-field>
-            <mat-label>Select vehicle</mat-label>
-            <mat-select (selectionChange)="changeVehicle($event)">
-              <mat-option
-                *ngFor="let vehicle of vehicles$ | async"
-                [value]="vehicle.id">
-                {{ vehicle | vehicleOutput }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+
+          <ng-container *ngIf="vehicles$ | async as vehicles">
+            <mat-form-field *ngIf="vehicles.length">
+              <mat-label>Select vehicle</mat-label>
+              <mat-select (selectionChange)="changeVehicle($event)">
+                <mat-option
+                  *ngFor="let vehicle of vehicles"
+                  [value]="vehicle.id">
+                  {{ vehicle | vehicleOutput }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div *ngIf="!vehicles.length" class="flex gap-1 items-center">
+              <mat-icon color="primary">info</mat-icon>
+              <p style="color: #999; margin: 0">
+                Please <a [routerLink]="['/vehicles/new']">add</a> some vehicles
+                before proceeding to create a contract.
+              </p>
+            </div>
+          </ng-container>
 
           <mat-expansion-panel [expanded]="!!selectedVehicleId">
             <app-edit-vehicle-details
@@ -59,16 +70,26 @@
         [completed]="contractFormGroup.controls.customer.valid">
         <form>
           <ng-template matStepLabel>Select customer</ng-template>
-          <mat-form-field>
-            <mat-label>Select customer</mat-label>
-            <mat-select (selectionChange)="changeCustomer($event)">
-              <mat-option
-                *ngFor="let customer of customers$ | async"
-                [value]="customer.id">
-                {{ customer.firstName + ' ' + customer.lastName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <ng-container *ngIf="customers$ | async as customers">
+            <mat-form-field *ngIf="customers.length">
+              <mat-label>Select customer</mat-label>
+              <mat-select (selectionChange)="changeCustomer($event)">
+                <mat-option
+                  *ngFor="let customer of customers"
+                  [value]="customer.id">
+                  {{ customer.firstName + ' ' + customer.lastName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div *ngIf="!customers.length" class="flex gap-1 items-center">
+              <mat-icon color="primary">info</mat-icon>
+              <p style="color: #999; margin: 0">
+                Please <a [routerLink]="['/customers/new']">add</a> some
+                customers before proceeding to create a contract.
+              </p>
+            </div>
+          </ng-container>
 
           <mat-expansion-panel [expanded]="!!selectedCustomerId">
             <app-edit-customer-details
