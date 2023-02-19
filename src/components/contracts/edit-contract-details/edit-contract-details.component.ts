@@ -1,14 +1,23 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Contract, ContractDTO, Customer } from '../../../models';
+import { Contract, ContractDTO, Customer, Vehicle } from '../../../models';
 import { ContractApiService } from '../../../services';
-import { finalize, from, mergeAll, Observable, of } from 'rxjs';
+import {
+  finalize,
+  from,
+  mergeAll,
+  Observable,
+  of,
+  shareReplay,
+  take,
+} from 'rxjs';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { ContractFormService } from '../../../services/forms/contract-form/contract-form.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteContractModalComponent } from '../delete-contract-modal/delete-contract-modal.component';
 import { DATE_FORMATS, SNACK_BAR_DURATION } from '../../../constants';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-contract-details',
@@ -23,6 +32,8 @@ export class EditContractDetailsComponent implements OnInit, OnDestroy {
   contractId: Contract['id'];
   contractFormGroup: typeof ContractFormService.prototype.form;
   requiredErrorMessage = 'Field should not be empty';
+  customerId: Customer['id'];
+  vehicleId: Vehicle['id'];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -45,8 +56,19 @@ export class EditContractDetailsComponent implements OnInit, OnDestroy {
       this.contractsApiService.getContract(this.contractId),
     ]).pipe(
       mergeAll(),
-      finalize(() => (this.isLoading = false))
+      finalize(() => (this.isLoading = false)),
+      shareReplay(1)
     );
+
+    this.contract$
+      .pipe(
+        filter(contract => !!contract.monthlyRate),
+        take(1)
+      )
+      .subscribe(({ customer, vehicle }) => {
+        this.customerId = customer.id;
+        this.vehicleId = vehicle.id;
+      });
   }
 
   ngOnDestroy() {
@@ -65,9 +87,14 @@ export class EditContractDetailsComponent implements OnInit, OnDestroy {
   saveContract() {
     const updatedContract: ContractDTO = {
       ...this.contractFormGroup.value,
-      customer: Customer.mapToDTO(
-        this.contractFormGroup.value.customer as Customer
-      ),
+      vehicle: {
+        ...this.contractFormGroup.value.vehicle,
+        id: this.vehicleId,
+      },
+      customer: Customer.mapToDTO({
+        ...this.contractFormGroup.value.customer,
+        id: this.customerId,
+      } as Customer),
     } as ContractDTO;
 
     this.isLoading = true;
