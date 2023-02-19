@@ -12,8 +12,8 @@ import {
 } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { ModelAndBrandApiService, VehicleApiService } from '../../apis';
-import { VehicleFormService } from '../../forms/vehicle-form/vehicle-form.service';
-import { Brand, VehicleModel } from '../../../models';
+import { VehicleFormService } from '../../forms';
+import { Brand, Vehicle, VehicleModel } from '../../../models';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +26,8 @@ export class VehicleHelperService {
   brandsLoading$!: Observable<boolean>;
   modelsLoading$!: Observable<boolean>;
 
+  formBrand$!: Observable<Vehicle['brand']>;
+
   constructor(
     private vehicleApiService: VehicleApiService,
     private vehicleFormService: VehicleFormService,
@@ -36,37 +38,30 @@ export class VehicleHelperService {
   private _toggleVehicleModelControl() {
     this.vehicleFormGroup.controls.model.disable();
 
-    this.vehicleFormGroup.controls.brand.valueChanges
-      .pipe(takeUntil(this._unsubscribeSubj$))
-      .subscribe(brand => {
-        if (brand) {
-          this.vehicleFormGroup.controls.model.enable();
-        }
-      });
+    this.formBrand$.pipe(takeUntil(this._unsubscribeSubj$)).subscribe(brand => {
+      if (brand) {
+        this.vehicleFormGroup.controls.model.enable();
+      }
+    });
   }
 
   private _getVehicleModelsOnBrandChange() {
-    this.vehicleModels$ =
-      this.vehicleFormGroup.controls.brand.valueChanges.pipe(
-        switchMap(brandName =>
-          this.brands$.pipe(
-            map(brands => brands.find(brand => brand.name === brandName))
-          )
-        ),
-        filter(brand => !!brand),
-        switchMap(selectedBrand =>
-          this.modelsBrandsApiService.getModelsByBrandId(selectedBrand?.id)
-        ),
-        shareReplay(1)
-      );
+    this.vehicleModels$ = this.formBrand$.pipe(
+      switchMap(brandName =>
+        this.brands$.pipe(
+          map(brands => brands.find(brand => brand.name === brandName))
+        )
+      ),
+      filter(brand => !!brand),
+      switchMap(selectedBrand =>
+        this.modelsBrandsApiService.getModelsByBrandId(selectedBrand?.id)
+      ),
+      shareReplay(1)
+    );
 
-    this.modelsLoading$ = from([
-      this.vehicleFormGroup.controls.brand.valueChanges,
-      this.vehicleModels$,
-    ]).pipe(
+    this.modelsLoading$ = from([this.formBrand$, this.vehicleModels$]).pipe(
       mergeAll(),
-      map(data => typeof data === 'string'),
-      startWith(true)
+      map(data => typeof data === 'string')
     );
   }
 
@@ -83,6 +78,10 @@ export class VehicleHelperService {
   }
 
   initDataFetching() {
+    this.formBrand$ = this.vehicleFormGroup.controls.brand.valueChanges.pipe(
+      shareReplay(1)
+    );
+
     this.brands$ = this.modelsBrandsApiService.getBrands().pipe(shareReplay(1));
 
     this.brandsLoading$ = this.brands$.pipe(
