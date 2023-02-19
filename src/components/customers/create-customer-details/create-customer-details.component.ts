@@ -3,10 +3,13 @@ import { finalize } from 'rxjs';
 import { Customer, CustomerDTO } from '../../../models';
 
 import { Router } from '@angular/router';
-import { CustomerApiService, ModelAndBrandApiService } from '../../../services';
+import {
+  CustomerApiService,
+  ModelAndBrandApiService,
+  CustomerFormService,
+} from '../../../services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SNACK_BAR_DURATION } from '../../../constants';
-import { CustomerFormService } from '../../../services/forms/customer-form/customer-form.service';
 
 @Component({
   selector: 'app-create-customer-details',

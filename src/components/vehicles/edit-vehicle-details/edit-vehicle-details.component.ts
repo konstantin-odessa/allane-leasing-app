@@ -56,6 +56,8 @@ export class EditVehicleDetailsComponent implements OnInit, OnDestroy {
 
     this._vehicleId = value;
 
+    this.vehicleFormGroup.reset();
+
     this.isLoading = true;
 
     this.vehicle$ = from([

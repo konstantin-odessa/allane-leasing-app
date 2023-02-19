@@ -11,7 +11,7 @@ import { nanValidator } from '../../../validators';
 export class ContractFormService {
   private _contractFormGroup = new FormGroup({
     monthlyRate: new FormControl(NaN, {
-      validators: [Validators.required, nanValidator],
+      validators: [Validators.required, nanValidator()],
       nonNullable: true,
     }),
 

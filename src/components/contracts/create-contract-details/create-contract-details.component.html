@@ -3,12 +3,14 @@
     <mat-card-title>Create new contract</mat-card-title>
   </mat-card-header>
 
-  <mat-card-content>
+  <mat-card-content style="max-height: calc(100vh - 165px); overflow: auto">
     <mat-stepper
       [formGroup]="contractFormGroup"
-      orientation="vertical"
+      orientation="horizontal"
       #stepper>
-      <mat-step [stepControl]="contractFormGroup.controls.monthlyRate">
+      <mat-step
+        [hasError]="!contractFormGroup.controls.monthlyRate.valid"
+        [completed]="contractFormGroup.controls.monthlyRate.valid">
         <form>
           <ng-template matStepLabel>Set monthly rate</ng-template>
           <mat-form-field appearance="fill">
@@ -24,7 +26,9 @@
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="contractFormGroup.controls.vehicle">
+      <mat-step
+        [hasError]="!contractFormGroup.controls.vehicle.valid"
+        [completed]="contractFormGroup.controls.vehicle.valid">
         <form>
           <ng-template matStepLabel>Select vehicle</ng-template>
           <mat-form-field>
@@ -50,7 +54,9 @@
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="contractFormGroup.controls.customer">
+      <mat-step
+        [hasError]="!contractFormGroup.controls.customer.valid"
+        [completed]="contractFormGroup.controls.customer.valid">
         <form>
           <ng-template matStepLabel>Select customer</ng-template>
           <mat-form-field>

@@ -13,7 +13,7 @@ export class VehicleFormService {
       nonNullable: true,
     }),
     modelYear: new FormControl<Vehicle['modelYear']>(NaN, {
-      validators: [Validators.required, nanValidator],
+      validators: [Validators.required, nanValidator()],
       nonNullable: true,
     }),
     price: new FormControl<Vehicle['price']>(NaN, {

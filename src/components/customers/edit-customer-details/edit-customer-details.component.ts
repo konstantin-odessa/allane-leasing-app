@@ -58,6 +58,8 @@ export class EditCustomerDetailsComponent implements OnInit, OnDestroy {
 
     this._customerId = value;
 
+    this.customerFormGroup.reset();
+
     this.isLoading = true;
 
     this.customer$ = from([
