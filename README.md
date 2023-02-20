@@ -9,6 +9,7 @@ There are some restrictions with the backend docker image that affect PUT and DE
 ### How to deploy project locally
 
 - Run bash script `docker-be-starter.sh`. It will start docker image locally.
+- Run `npm i` to install necessary dependencies
 - Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.4.
