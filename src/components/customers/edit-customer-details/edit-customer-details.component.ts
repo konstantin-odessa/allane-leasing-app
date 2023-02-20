@@ -20,7 +20,7 @@ import { Customer, CustomerDTO } from '../../../models';
 import { ActivatedRoute } from '@angular/router';
 import { CustomerApiService, ModelAndBrandApiService } from '../../../services';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SNACK_BAR_DURATION } from '../../../constants';
+import { REQUIRED_ERROR_MESSAGE, SNACK_BAR_DURATION } from '../../../constants';
 import { CustomerFormService } from '../../../services';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, map } from 'rxjs/operators';
@@ -35,6 +35,7 @@ export class EditCustomerDetailsComponent implements OnInit, OnDestroy {
   editMode = false;
   isLoading = false;
   customerFormGroup: typeof CustomerFormService.prototype.form;
+  requiredErrorMessage = REQUIRED_ERROR_MESSAGE;
 
   customer$!: Observable<Customer>;
 

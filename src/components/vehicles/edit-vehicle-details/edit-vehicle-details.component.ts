@@ -23,7 +23,7 @@ import {
   VehicleHelperService,
 } from '../../../services';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SNACK_BAR_DURATION } from '../../../constants';
+import { REQUIRED_ERROR_MESSAGE, SNACK_BAR_DURATION } from '../../../constants';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteVehicleModalComponent } from '../delete-vehicle-modal/delete-vehicle-modal.component';
 import { VehicleFormService } from '../../../services';
@@ -48,6 +48,7 @@ export class EditVehicleDetailsComponent implements OnInit, OnDestroy {
   @Input()
   isStandalone = true;
   editMode = false;
+  requiredErrorMessage = REQUIRED_ERROR_MESSAGE;
   private _vehicleId: Vehicle['id'];
   @Input() set vehicleId(value: Vehicle['id']) {
     if (!value) {

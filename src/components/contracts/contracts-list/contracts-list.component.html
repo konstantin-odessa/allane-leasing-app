@@ -12,7 +12,7 @@
   <div class="table-container">
     <table
       mat-table
-      [dataSource]="contracts$ | async"
+      [dataSource]="contracts$ | async | nonNullable"
       matSort
       class="mat-elevation-z8">
       <ng-container matColumnDef="contractNumber">

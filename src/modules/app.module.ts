@@ -20,7 +20,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CapEmptyDataPipe, VehicleOutputPipe } from '../pipes';
+import { CapEmptyDataPipe, NonNullablePipe, VehicleOutputPipe } from '../pipes';
 import { DelayInterceptor } from '../interceptors';
 import { SharedMaterialModule } from './shared-material.module';
 import { ErrorNotifierInterceptor } from '../interceptors/error-notifier/error-notifier.interceptor';
@@ -43,6 +43,7 @@ import { ErrorNotifierInterceptor } from '../interceptors/error-notifier/error-n
     VehiclesListComponent,
     DeleteVehicleModalComponent,
     VehicleOutputPipe,
+    NonNullablePipe,
   ],
   imports: [
     BrowserModule,
