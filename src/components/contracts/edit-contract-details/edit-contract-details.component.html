@@ -1,0 +1,96 @@
+<div class="relative">
+  <ng-container *ngIf="contract$ | async as contract">
+    <mat-card [formGroup]="contractFormGroup">
+      <mat-card-header class="flex justify-between">
+        <mat-card-title>Contract Details:</mat-card-title>
+        <div *ngIf="!editMode">
+          <button
+            class="mr-5"
+            mat-raised-button
+            color="primary"
+            (click)="editContract(contract)">
+            Edit
+          </button>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="deleteContract(contract)">
+            Delete
+          </button>
+        </div>
+
+        <div *ngIf="editMode">
+          <button
+            class="mr-5"
+            [disabled]="!contractFormGroup.valid"
+            mat-raised-button
+            color="primary"
+            (click)="saveContract()">
+            Save
+          </button>
+          <button mat-raised-button color="warn" (click)="cancelContractEdit()">
+            Cancel
+          </button>
+        </div>
+      </mat-card-header>
+      <mat-card-content class="mt-5">
+        <!-- Common Details -->
+        <mat-card class="relative">
+          <mat-card-header>Common Details</mat-card-header>
+          <mat-card-content class="contract-details-container">
+            <mat-list *ngIf="!editMode; else commonDetailsTmpl">
+              <mat-list-item>
+                <div class="list-item-content">
+                  <div><strong>Monthly rate:</strong></div>
+                  <div>
+                    {{ contract.monthlyRate | currency : 'EUR' | capEmptyData }}
+                  </div>
+                </div>
+              </mat-list-item>
+            </mat-list>
+
+            <ng-template #commonDetailsTmpl>
+              <mat-list>
+                <mat-list-item>
+                  <div class="list-item-content">
+                    <div><strong>Monthly rate:</strong></div>
+                    <mat-form-field class="form-container" appearance="fill">
+                      <input
+                        type="number"
+                        #monthlyRateMat="matInput"
+                        formControlName="monthlyRate"
+                        matInput />
+                      <mat-error *ngIf="monthlyRateMat.errorState">{{
+                        requiredErrorMessage
+                      }}</mat-error>
+                    </mat-form-field>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </ng-template>
+          </mat-card-content>
+
+          <div class="loading-cloak" *ngIf="isLoading">
+            <mat-spinner></mat-spinner>
+          </div>
+        </mat-card>
+
+        <div class="mt-5"></div>
+
+        <!-- Vehicle Details -->
+        <app-edit-vehicle-details
+          [vehicleId]="contract.vehicle.id"
+          [canEdit]="editMode"
+          [isStandalone]="false"></app-edit-vehicle-details>
+
+        <div class="mt-5"></div>
+
+        <!-- Customer Details -->
+        <app-edit-customer-details
+          [customerId]="contract.customer.id"
+          [canEdit]="editMode"
+          [isStandalone]="false"></app-edit-customer-details>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>

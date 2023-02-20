@@ -1,0 +1,122 @@
+<mat-card class="relative">
+  <mat-card-header class="flex justify-center">
+    <mat-card-title>Create new contract</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content style="max-height: calc(100vh - 165px); overflow: auto">
+    <mat-stepper
+      [formGroup]="contractFormGroup"
+      orientation="horizontal"
+      #stepper>
+      <mat-step
+        [hasError]="!contractFormGroup.controls.monthlyRate.valid"
+        [completed]="contractFormGroup.controls.monthlyRate.valid">
+        <form>
+          <ng-template matStepLabel>Set monthly rate</ng-template>
+          <mat-form-field appearance="fill">
+            <mat-label>Monthly rate:</mat-label>
+            <input
+              type="number"
+              matInput
+              formControlName="monthlyRate"
+              required />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step
+        [hasError]="!contractFormGroup.controls.vehicle.valid"
+        [completed]="contractFormGroup.controls.vehicle.valid">
+        <form>
+          <ng-template matStepLabel>Select vehicle</ng-template>
+
+          <ng-container *ngIf="vehicles$ | async as vehicles">
+            <mat-form-field *ngIf="vehicles.length">
+              <mat-label>Select vehicle</mat-label>
+              <mat-select (selectionChange)="changeVehicle($event)">
+                <mat-option
+                  *ngFor="let vehicle of vehicles"
+                  [value]="vehicle.id">
+                  {{ vehicle | vehicleOutput }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div *ngIf="!vehicles.length" class="flex gap-1 items-center">
+              <mat-icon color="primary">info</mat-icon>
+              <p style="color: #999; margin: 0">
+                Please <a [routerLink]="['/vehicles/new']">add</a> some vehicles
+                before proceeding to create a contract.
+              </p>
+            </div>
+          </ng-container>
+
+          <mat-expansion-panel [expanded]="!!selectedVehicleId">
+            <app-edit-vehicle-details
+              (vehicleLoaded)="onVehicleLoaded($event)"
+              [vehicleId]="selectedVehicleId"
+              [isStandalone]="false"></app-edit-vehicle-details>
+          </mat-expansion-panel>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step
+        [hasError]="!contractFormGroup.controls.customer.valid"
+        [completed]="contractFormGroup.controls.customer.valid">
+        <form>
+          <ng-template matStepLabel>Select customer</ng-template>
+          <ng-container *ngIf="customers$ | async as customers">
+            <mat-form-field *ngIf="customers.length">
+              <mat-label>Select customer</mat-label>
+              <mat-select (selectionChange)="changeCustomer($event)">
+                <mat-option
+                  *ngFor="let customer of customers"
+                  [value]="customer.id">
+                  {{ customer.firstName + ' ' + customer.lastName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div *ngIf="!customers.length" class="flex gap-1 items-center">
+              <mat-icon color="primary">info</mat-icon>
+              <p style="color: #999; margin: 0">
+                Please <a [routerLink]="['/customers/new']">add</a> some
+                customers before proceeding to create a contract.
+              </p>
+            </div>
+          </ng-container>
+
+          <mat-expansion-panel [expanded]="!!selectedCustomerId">
+            <app-edit-customer-details
+              (customerLoaded)="onCustomerLoaded($event)"
+              [customerId]="selectedCustomerId"
+              [isStandalone]="false"></app-edit-customer-details>
+          </mat-expansion-panel>
+
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-stepper>
+  </mat-card-content>
+
+  <mat-card-actions class="flex justify-end">
+    <button
+      (click)="createContract()"
+      [disabled]="!contractFormGroup.valid"
+      mat-raised-button
+      color="accent">
+      Create contract
+    </button>
+  </mat-card-actions>
+
+  <div *ngIf="isLoading" class="loading-cloak">
+    <mat-spinner></mat-spinner>
+  </div>
+</mat-card>

@@ -1,0 +1,13 @@
+.vehicle-container {
+  position: relative;
+}
+
+.list-item-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+mat-list mat-list-item {
+  height: 80px;
+}

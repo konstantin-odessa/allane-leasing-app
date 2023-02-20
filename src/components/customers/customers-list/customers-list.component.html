@@ -1,0 +1,68 @@
+<div class="flex justify-end m-4">
+  <button [routerLink]="['new']" mat-raised-button color="primary">
+    Add new customer
+  </button>
+</div>
+
+<div class="relative mat-elevation-z8">
+  <div class="loading-cloak" *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+  </div>
+
+  <div class="table-container">
+    <table
+      mat-table
+      [dataSource]="customers$ | async | nonNullable"
+      matSort
+      class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>First Name</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.firstName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Last Name</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.lastName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="birthDate">
+        <th mat-header-cell *matHeaderCellDef>Birth Date</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.birthDate | date }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Details</th>
+        <td mat-cell *matCellDef="let element">
+          <a [routerLink]="[element.id]">View Details</a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="5">
+          <div class="empty-table-message mat-h3 mat-subheading-1">
+            <p>No customers found.</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    [length]="numberOfItems$ | async">
+  </mat-paginator>
+</div>
