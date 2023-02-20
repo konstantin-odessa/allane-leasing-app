@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ActivatedRouteMock } from '../../../helpers';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NonNullablePipe } from '../../../pipes';
 
 describe('CustomersListComponent', () => {
   let component: CustomersListComponent;
@@ -25,7 +26,7 @@ describe('CustomersListComponent', () => {
         HttpClient,
         { provide: ActivatedRoute, useClass: ActivatedRouteMock },
       ],
-      declarations: [CustomersListComponent],
+      declarations: [CustomersListComponent, NonNullablePipe],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CustomersListComponent);

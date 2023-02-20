@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { SharedMaterialModule } from '../../../modules/shared-material.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NonNullablePipe } from '../../../pipes';
 
 describe('ContractsListComponent', () => {
   let component: ContractsListComponent;
@@ -20,7 +21,7 @@ describe('ContractsListComponent', () => {
         BrowserAnimationsModule,
       ],
       providers: [HttpClient],
-      declarations: [ContractsListComponent],
+      declarations: [ContractsListComponent, NonNullablePipe],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ContractsListComponent);
