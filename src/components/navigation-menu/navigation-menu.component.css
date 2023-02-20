@@ -1,3 +1,9 @@
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
 a.mat-nav-link {
   color: white;
   font-size: 18px;
