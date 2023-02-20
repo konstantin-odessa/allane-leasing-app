@@ -139,12 +139,6 @@ export class EditCustomerDetailsComponent implements OnInit, OnDestroy {
             }
           );
         },
-        error: err => {
-          this.snackBarService.open(err.message, 'Close', {
-            duration: SNACK_BAR_DURATION,
-            verticalPosition: 'top',
-          });
-        },
       });
   }
 

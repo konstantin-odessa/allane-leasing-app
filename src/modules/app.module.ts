@@ -23,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CapEmptyDataPipe, VehicleOutputPipe } from '../pipes';
 import { DelayInterceptor } from '../interceptors';
 import { SharedMaterialModule } from './shared-material.module';
+import { ErrorNotifierInterceptor } from '../interceptors/error-notifier/error-notifier.interceptor';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,11 @@ import { SharedMaterialModule } from './shared-material.module';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, multi: true, useClass: DelayInterceptor },
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: ErrorNotifierInterceptor,
+    },
   ],
   bootstrap: [AppComponent],
 })

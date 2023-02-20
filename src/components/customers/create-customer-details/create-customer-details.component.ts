@@ -63,12 +63,6 @@ export class CreateCustomerDetailsComponent implements OnDestroy {
 
           this.router.navigate(['/customers']);
         },
-        error: err => {
-          this.snackBarService.open(err?.error?.error || err.message, 'Close', {
-            duration: SNACK_BAR_DURATION,
-            verticalPosition: 'top',
-          });
-        },
       });
   }
 }

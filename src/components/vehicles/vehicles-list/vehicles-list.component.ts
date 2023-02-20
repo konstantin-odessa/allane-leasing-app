@@ -10,10 +10,9 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { VehicleApiService } from '../../../services';
-import { SortDirectionEnum } from '../../../enums';
 import { map } from 'rxjs/operators';
 import { Vehicle, VehiclePageResponseDTO } from '../../../models';
-import { assertNever, getSortDirection } from '../../../helpers';
+import { getSortDirection } from '../../../helpers';
 
 @Component({
   selector: 'app-customers-list',

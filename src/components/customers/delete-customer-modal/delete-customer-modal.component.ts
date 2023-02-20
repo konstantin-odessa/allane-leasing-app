@@ -44,12 +44,6 @@ export class DeleteCustomerModalComponent {
 
           this.router.navigate(['/contracts']);
         },
-        error: err => {
-          this.snackBarService.open(err.message, 'Close', {
-            duration: SNACK_BAR_DURATION,
-            verticalPosition: 'top',
-          });
-        },
       });
 
     this.dialogRef.close();

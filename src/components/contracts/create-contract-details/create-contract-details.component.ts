@@ -98,12 +98,6 @@ export class CreateContractDetailsComponent implements OnDestroy {
 
           this.router.navigate(['/contracts']);
         },
-        error: err => {
-          this.snackBarService.open(err.error.error, 'Close', {
-            duration: SNACK_BAR_DURATION,
-            verticalPosition: 'top',
-          });
-        },
       });
   }
 

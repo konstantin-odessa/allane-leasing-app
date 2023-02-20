@@ -78,12 +78,6 @@ export class CreateVehicleDetailsComponent implements OnInit, OnDestroy {
 
           this.router.navigate(['/vehicles']);
         },
-        error: err => {
-          this.snackBarService.open(err?.error?.error || err.message, 'Close', {
-            duration: SNACK_BAR_DURATION,
-            verticalPosition: 'top',
-          });
-        },
       });
   }
 }

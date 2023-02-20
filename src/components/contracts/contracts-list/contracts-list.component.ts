@@ -14,9 +14,8 @@ import {
   ContractOverviewPageResponseDTO,
 } from '../../../models';
 import { ContractOverviewsApiService } from '../../../services';
-import { SortDirectionEnum } from '../../../enums';
 import { map } from 'rxjs/operators';
-import { assertNever, getSortDirection } from '../../../helpers';
+import { getSortDirection } from '../../../helpers';
 
 @Component({
   selector: 'app-contracts-list',
