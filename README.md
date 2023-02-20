@@ -12,7 +12,10 @@ There are some restrictions with the backend docker image that affect PUT and DE
 - Run `npm i` to install necessary dependencies
 - Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.4.
+### Technologies Used
+- This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.4.
+- The user interface is built using [Material Design](https://material.angular.io/), a popular UI framework known for its clean, modern look and ease of use.
+- [Tailwind CSS](https://tailwindcss.com/) is used as CSS classes utility helper 
 
 ## Code scaffolding
 
